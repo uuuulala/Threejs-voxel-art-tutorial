@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Demoname | Demo 1 | Codrops</title>
+		<title>Three.js Voxelizer | Codrops</title>
 		<!-- Generate Meta Tags via https://www.opengraph.xyz -->
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
+		<meta name="description" content="Final demo for the tutorial on how to turn glTF models to voxels with Three.js" />
+		<meta name="keywords" content="three.js, webgl, voxel, pixel art" />
 		<meta name="author" content="Codrops" />
 		<link rel="shortcut icon" href="favicon.ico">
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -27,9 +27,24 @@
 				<a class="frame__prev" href="">Previous demo</a>
 			</div>
 			<div class="content">
-				<!-- the content -->
+				<canvas id="canvas"></canvas>
+				<div class="container">
+				</div>
+				<div id="selector">
+				</div>
 			</div>
 		</main>
 		<!--script src="https://tympanus.net/codrops/adpacks/cda_sponsor.js"></script-->
+		<script src='https://unpkg.co/gsap@3/dist/gsap.min.js'></script>
+		<script type="importmap">
+		{
+			"imports": {
+				"three": "https://threejs.org/build/three.module.js",
+				"three/addons/": "https://threejs.org/examples/jsm/"
+			}
+		}
+		</script>
+		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script type="module" src="./js/main.js"></script>
 	</body>
 </html>

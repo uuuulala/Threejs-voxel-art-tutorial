@@ -169,19 +169,74 @@ a:focus-visible {
 	grid-area: prev;
 }
 
-.content {
-	display: flex;
-	flex-direction: column;
-	width: 100vw;
-	height: calc(100vh - 13rem);
-	position: relative;
-	justify-content: flex-start;
-	align-items: center;
+
+html, body {
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	background: radial-gradient(#e6d8f0, #ffe8e8);
 }
 
-@media screen and (min-width: 53em) {
-	.content {
-		height: 100vh;
-		justify-content: center;
+.content,
+.container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+}
+
+#selector {
+	position: fixed;
+	top: 0;
+	left: calc(50% - 55vh);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+@media (max-aspect-ratio: 3/2) {
+	#selector {
+		left: 10px;
 	}
+
+}
+
+#selector .model-prev {
+	position: relative;
+	touch-action: auto !important;
+	border: 2px solid transparent;
+	cursor: pointer;
+}
+
+#selector .model-prev:not(.active):hover {
+	border-color: #fff;
+}
+
+#selector .model-prev:before {
+	content: "";
+	float: left;
+	padding-top: 100%;
+}
+
+#selector .model-prev.active {
+	cursor: auto;
+}
+
+#selector .model-prev:after {
+	position: absolute;
+	content: '';
+	top: 5px;
+	right: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
+	background-color: white;
+	display: none;
+}
+
+#selector .model-prev.active:after {
+	display: block;
 }
