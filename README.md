@@ -1,17 +1,8 @@
-*How to use this template:*
+# Turning 3D models to voxel art with Three.js
 
-- Styles for the demo go in css/base.css
-- Add build instructions and credits to the README.md
-- For writing the tutorial, take a look at https://github.com/crnacura/CodropsTemplate/wiki/Writing-the-article
-- Delete this 'how to' intro in the final version and leave the following (fill in title/description, credits and social links of your likings, we'll do the rest):
+Final demo for the tutorial on how to turn glTF models to voxels with Three.js
 
--------
-
-# The Title
-
-Final demo for the tutorial on how to turn glTF models to voxels with Three.js.
-
-![Image Title](https://generative-placeholders.glitch.me/image?width=800&height=600")
+![Image Title](voxels-preview.gif)
 
 [Article on Codrops](https://tympanus.net/codrops/?p=)
 
