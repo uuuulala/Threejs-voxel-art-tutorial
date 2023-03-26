@@ -6,6 +6,7 @@ import {RoundedBoxGeometry} from "three/addons/geometries/RoundedBoxGeometry.js"
 const containerEl = document.querySelector('.container');
 const canvasEl = document.querySelector('#canvas');
 const selectorEl = document.querySelector('#selector');
+const loaderEl = document.querySelector('#loader');
 
 let renderer, mainScene, mainCamera, mainOrbit, lightHolder, topLight;
 let instancedMesh, voxelGeometry, voxelMaterial;
@@ -15,7 +16,7 @@ let previewScenes = [];
 const voxelsPerModel = [];
 let voxels = [];
 
-let activeModelIdx = 5;
+let activeModelIdx = 4;
 const modelURLs = [
     'https://ksenia-k.com/models/Chili%20Pepper.glb',
     'https://ksenia-k.com/models/Chicken.glb',
@@ -136,8 +137,9 @@ function createPreviewScene(modelIdx) {
 
 function loadModels() {
 
-    const loader = new GLTFLoader();
+    createInstancedMesh(100);
 
+    const loader = new GLTFLoader();
     let modelsLoadCnt = 0;
     modelURLs.forEach((url, modelIdx) => {
 
@@ -153,27 +155,29 @@ function loadModels() {
 
             // get the voxel data from the model
             voxelizeModel(modelIdx, gltf.scene);
+            
+            // update the instanced mesh
+            createInstancedMesh(Math.max(...voxelsPerModel.map(m => m.length)));
 
             // once all the models are loaded...
             modelsLoadCnt++;
-            if (modelsLoadCnt === modelURLs.length) {
-                // ... get the size of instanced mesh
-                const maxNumberOfVoxels = Math.max(...voxelsPerModel.map(m => m.length));
-                for (let i = 0; i < maxNumberOfVoxels; i++) {
-                    // initiate the voxel array
-                    voxels.push({
-                        position: new THREE.Vector3(0, 0, 0),
-                        color: new THREE.Color(0xffe8e8)
-                    })
-                }
-                // create the instances and show the 1st model
-                createInstancedMesh(maxNumberOfVoxels);
-                animateVoxels(0, activeModelIdx);
-
-                // render everything
-                setupSelectorEvents();
+            if (modelsLoadCnt === 1) {
+                // Once we have once voxelized model ready, start rendering the available content
+                gsap.set(loaderEl, {
+                    innerHTML: "calculating the voxels...",
+                    y: .3 * window.innerHeight
+                })
                 updateSceneSize();
                 render();
+            }
+            if (modelsLoadCnt === modelURLs.length) {
+                // Once we have all the models voxelized, start the animation
+                gsap.to(loaderEl, {
+                    duration: .3,
+                    opacity: 0
+                })
+                animateVoxels(0, activeModelIdx);
+                setupSelectorEvents();
             }
         }, undefined, (error) => {
             console.error(error);
@@ -274,8 +278,8 @@ function voxelizeModel(modelIdx, importedScene) {
                     const color = new THREE.Color();
                     const {h, s, l} = mesh.material.color.getHSL(color);
                     color.setHSL(h, s * .8, l * .8 + .2);
-
                     const pos = new THREE.Vector3(i, j, k);
+                    
                     if (isInsideMesh(pos, new THREE.Vector3(0, 0, 1), mesh)) {
                         modelVoxels.push({color: color, position: pos});
                         break;
@@ -295,6 +299,23 @@ function isInsideMesh(pos, ray, mesh) {
 }
 
 function createInstancedMesh(cnt) {
+
+    voxels = [];
+    mainScene.remove(instancedMesh);
+
+    for (let i = 0; i < cnt; i++) {
+        // initiate the voxel array with random colors and positions
+        const randomCoordinate = () => {
+            let v = (Math.random() - .5);
+            v -= (v % params.gridSize);
+            return v;
+        }
+        voxels.push({
+            position: new THREE.Vector3(randomCoordinate(), randomCoordinate(), randomCoordinate()),
+            color: new THREE.Color().setHSL(Math.random(), .8, .8)
+        })
+    }
+    
     instancedMesh = new THREE.InstancedMesh(voxelGeometry, voxelMaterial, cnt);
     instancedMesh.castShadow = true;
     instancedMesh.receiveShadow = true;
