@@ -157,7 +157,10 @@ function loadModels() {
             voxelizeModel(modelIdx, gltf.scene);
             
             // update the instanced mesh
-            recreateInstancedMesh(Math.max(...voxelsPerModel.map(m => m.length)));
+            const numberOfInstances = Math.max(...voxelsPerModel.map(m => m.length));
+            if (numberOfInstances > instancedMesh.count) {
+                recreateInstancedMesh(numberOfInstances);
+            }
 
             // once all the models are loaded...
             modelsLoadCnt++;
