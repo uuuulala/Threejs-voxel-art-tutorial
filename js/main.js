@@ -137,7 +137,7 @@ function createPreviewScene(modelIdx) {
 
 function loadModels() {
 
-    createInstancedMesh(100);
+    recreateInstancedMesh(100);
 
     const loader = new GLTFLoader();
     let modelsLoadCnt = 0;
@@ -157,7 +157,7 @@ function loadModels() {
             voxelizeModel(modelIdx, gltf.scene);
             
             // update the instanced mesh
-            createInstancedMesh(Math.max(...voxelsPerModel.map(m => m.length)));
+            recreateInstancedMesh(Math.max(...voxelsPerModel.map(m => m.length)));
 
             // once all the models are loaded...
             modelsLoadCnt++;
@@ -298,13 +298,14 @@ function isInsideMesh(pos, ray, mesh) {
     return rayCasterIntersects.length % 2 === 1;
 }
 
-function createInstancedMesh(cnt) {
+function recreateInstancedMesh(cnt) {
 
+    // remove the old mesh and voxels data
     voxels = [];
     mainScene.remove(instancedMesh);
 
+    // re-initiate the voxel array with random colors and positions
     for (let i = 0; i < cnt; i++) {
-        // initiate the voxel array with random colors and positions
         const randomCoordinate = () => {
             let v = (Math.random() - .5);
             v -= (v % params.gridSize);
@@ -316,20 +317,22 @@ function createInstancedMesh(cnt) {
         })
     }
     
+    // create a new instanced mesh object
     instancedMesh = new THREE.InstancedMesh(voxelGeometry, voxelMaterial, cnt);
     instancedMesh.castShadow = true;
     instancedMesh.receiveShadow = true;
 
+    // assign voxels data to the instanced mesh
     for (let i = 0; i < cnt; i++) {
         instancedMesh.setColorAt(i, voxels[i].color);
         dummy.position.copy(voxels[i].position);
         dummy.updateMatrix();
         instancedMesh.setMatrixAt(i, dummy.matrix);
     }
-
     instancedMesh.instanceMatrix.needsUpdate = true;
     instancedMesh.instanceColor.needsUpdate = true;
 
+    // add a new mesh to the scene
     mainScene.add(instancedMesh);
 }
 
