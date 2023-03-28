@@ -6,21 +6,21 @@
 
 :root {
 	font-size: 16px;
-	--color-text: #111;
-	--color-bg: #fff;
-	--color-link: #b73333;
-	--color-link-hover: #000;
+	--color-text: #201d1d;
+	--color-bg: #eeeff2;
+	--color-link: #b020bc;
+	--color-link-hover: #201d1d;
 }
 
 body {
 	margin: 0;
 	color: var(--color-text);
 	background-color: var(--color-bg);
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+	font-family: monospace;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	height: 100vh;
-	background: radial-gradient(#e6d8f0, #ffe8e8);
+	background: radial-gradient(#eeeff2, #f0e1f0);
 }
 
 /* Page Loader */
@@ -107,31 +107,32 @@ a:focus-visible {
 }
 
 .frame {
+	text-align: right;
 	position: fixed;
 	z-index: 600;
 	top: 0;
 	width: 100%;
 	padding: 1.5rem;
 	display: grid;
-	grid-template-columns: auto auto 1fr;
-	grid-template-rows: auto;
-	grid-template-areas: 'title prev sponsor';
-	justify-content: start;
-	margin-bottom: 3rem;
-	grid-gap: 2rem;
+	grid-template-areas:
+	'title title' 
+	'back prev'
+	'sponsor sponsor';
+	grid-template-columns: auto auto;
+	justify-content: end;
+	align-items: end;
+	grid-gap: 0.5rem;
 }
 
 .frame a {
 	pointer-events: auto;
-}
-
-.frame a:not(.frame__title-back) {
 	white-space: nowrap;
 	overflow: hidden;
 	position: relative;
+	justify-self: end;
 }
 
-.frame a:not(.frame__title-back)::before {
+.frame a::before {
 	content: '';
 	height: 1px;
 	width: 100%;
@@ -142,33 +143,21 @@ a:focus-visible {
 	transform-origin: 0% 50%;
 }
 
-.frame a:not(.frame__title-back):hover::before {
+.frame a:hover::before {
 	transform: scaleX(0);
 	transform-origin: 100% 50%;
 }
 
 .frame__title {
 	grid-area: title;
-	display: flex;
-}
-
-.frame__title-main {
-	font-size: inherit;
+	font-size: 2.5rem;
 	margin: 0;
-	font-weight: inherit;
+	font-family: "rixvideogame-pro", sans-serif;
+	font-weight: 400;
 }
 
-.frame__title-back {
-	position: relative;
-	display: flex;
-}
-
-.frame__title-back span {
-	display: none;
-}
-
-.frame__title-back svg {
-	fill: currentColor;
+.frame__back {
+	grid-area: back;
 }
 
 .frame__prev {
@@ -192,20 +181,13 @@ a:focus-visible {
 
 #selector {
 	position: fixed;
-	top: 0;
-	left: calc(50% - 55vh);
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-}
-
-@media (max-aspect-ratio: 3/2) {
-	#selector {
-		left: 10px;
-	}
-
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 #selector .model-prev {
@@ -216,7 +198,7 @@ a:focus-visible {
 }
 
 #selector .model-prev:not(.active):hover {
-	border: 2px solid rgba(255,255,255,0.8);
+	border: 2px solid var(--color-text);
 }
 
 #selector .model-prev:before {
@@ -243,4 +225,22 @@ a:focus-visible {
 
 #selector .model-prev.active:after {
 	display: block;
+}
+
+@media screen and (min-width: 53em) {
+	.frame {
+		text-align: left;
+		justify-content: start;
+		align-items: start;
+		grid-gap: 0.5rem;
+		display: grid;
+		grid-template-areas:
+		'title title sponsor' 
+		'back prev sponsor';
+		grid-template-columns: auto auto 1fr;
+		grid-template-rows: auto auto;
+	}
+	.frame a {
+		justify-self: start;
+	}
 }
