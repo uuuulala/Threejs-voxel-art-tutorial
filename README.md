@@ -31,7 +31,7 @@ The page is using the following libs:
 
 ## Misc
 
-Follow Ksenia: [Twitter](https://twitter.com/uuuuuulala), [Codepen](https://codepen.io/ksenia-k), [website](https://ksenia-k.com/)
+Follow Ksenia: [Twitter](https://twitter.com/uuuuuulala), [Codepen](https://codepen.io/ksenia-k), [website](https://ksenia-k.com/), [Instagram](https://instagram.com/ksenia_showcase/)
 
 Follow Codrops: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/codrops), [GitHub](https://github.com/codrops), [Instagram](https://www.instagram.com/codropsss/)
 
