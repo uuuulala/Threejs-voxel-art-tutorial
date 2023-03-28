@@ -4,9 +4,9 @@ Final demo for the tutorial on how to turn glTF models to voxels with Three.js
 
 ![Image Title](voxels-preview.gif)
 
-[Article on Codrops](https://tympanus.net/codrops/?p=)
+[Article on Codrops](https://tympanus.net/codrops/?p=70997)
 
-[Demo](http://tympanus.net/Development/.../)
+[Demo](http://tympanus.net/Tutorials/Voxelizer/)
 
 
 ## Installation

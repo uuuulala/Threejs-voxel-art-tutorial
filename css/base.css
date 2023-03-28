@@ -8,7 +8,7 @@
 	font-size: 16px;
 	--color-text: #111;
 	--color-bg: #fff;
-	--color-link: #aaa;
+	--color-link: #b73333;
 	--color-link-hover: #000;
 }
 
@@ -19,6 +19,8 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	height: 100vh;
+	background: radial-gradient(#e6d8f0, #ffe8e8);
 }
 
 /* Page Loader */
@@ -105,10 +107,13 @@ a:focus-visible {
 }
 
 .frame {
-	color: var(--color-title);
+	position: fixed;
+	z-index: 600;
+	top: 0;
+	width: 100%;
 	padding: 1.5rem;
 	display: grid;
-	grid-template-columns: auto auto auto;
+	grid-template-columns: auto auto 1fr;
 	grid-template-rows: auto;
 	grid-template-areas: 'title prev sponsor';
 	justify-content: start;
@@ -116,11 +121,14 @@ a:focus-visible {
 	grid-gap: 2rem;
 }
 
+.frame a {
+	pointer-events: auto;
+}
+
 .frame a:not(.frame__title-back) {
 	white-space: nowrap;
 	overflow: hidden;
 	position: relative;
-	display: inline-block;
 }
 
 .frame a:not(.frame__title-back)::before {
@@ -145,16 +153,14 @@ a:focus-visible {
 }
 
 .frame__title-main {
-	font-size: 1rem;
+	font-size: inherit;
 	margin: 0;
-	font-weight: normal;
+	font-weight: inherit;
 }
 
 .frame__title-back {
 	position: relative;
 	display: flex;
-	align-items: flex-end;
-	margin-bottom: 0.15rem;
 }
 
 .frame__title-back span {
@@ -169,14 +175,6 @@ a:focus-visible {
 	grid-area: prev;
 }
 
-
-html, body {
-	padding: 0;
-	margin: 0;
-	height: 100vh;
-	background: radial-gradient(#e6d8f0, #ffe8e8);
-}
-
 .content,
 .container {
 	position: fixed;
@@ -185,11 +183,13 @@ html, body {
 	width: 100%;
 	height: 100vh;
 }
+
 .container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+
 #selector {
 	position: fixed;
 	top: 0;
@@ -211,12 +211,12 @@ html, body {
 #selector .model-prev {
 	position: relative;
 	touch-action: auto !important;
-	border: 2px solid transparent;
 	cursor: pointer;
+	border: 1px solid transparent;
 }
 
 #selector .model-prev:not(.active):hover {
-	border-color: #fff;
+	border: 2px solid rgba(255,255,255,0.8);
 }
 
 #selector .model-prev:before {
